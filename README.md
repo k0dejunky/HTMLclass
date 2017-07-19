@@ -4,4 +4,4 @@ Perl MVC - This MVC is currently being developed. It contains the normal parts o
 example:
 	$view->h1("center","this is a heading");
 
-in the above example GUI.pm will return <h1 class="center"> This is a heading </h1> 
+in the above example GUI.pm will return <code><h1 class="center"> This is a heading </h1></code>
