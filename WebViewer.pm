@@ -25,17 +25,19 @@ sub start {
 	my ($self) = @_;
 	print $GUI->headers();
 	print $GUI->startPage("Minecraft Server Admin");
-	$self->{output} = $self->{output}.$GUI->divStart("headbox");
+	#$self->{output} = $self->{output}.$GUI->divStart("headbox");
         $self->{output} = $self->{output}.$GUI->divStart("header");
 	$self->{output} = $self->{output}.$GUI->h1("center", "Minecraft Server Admin Page");
         $self->{output} = $self->{output}.$GUI->divEnd();
+	$self->{output} = $self->{output}.$GUI->br();
 	$self->renderLogin();
-	$self->{output} = $self->{output}.$GUI->divEnd();
+	#$self->{output} = $self->{output}.$GUI->divEnd();
 	$self->displayPage();
 }
 sub renderLogin {
 	my ($self) = @_;
-	$self->{output} = $self->{output}.$GUI->divStart("logon1", "right");
+	$self->{output} = $self->{output}.$GUI->divStart("logon", "center");
+	$self->{output} = $self->{output}.$GUI->divStart("logon1", "vertCenter");
 	$self->{output} = $self->{output}.$GUI->formStart("center","index.cgi", "post", "login");
 	$self->{output} = $self->{output}.$GUI->input("username", "text", "username", "20", "20");
 	$self->{output} = $self->{output}.$GUI->br();
@@ -44,6 +46,8 @@ sub renderLogin {
 	$self->{output} = $self->{output}.$GUI->input("submit", "submit","login");
 	$self->{output} = $self->{output}.$GUI->formEnd();
 	$self->{output} = $self->{output}.$GUI->divEnd();
+        $self->{output} = $self->{output}.$GUI->divEnd();
+
 }
 sub displayPage{
 	my ($self) = @_;
