@@ -25,7 +25,10 @@ sub start {
 	my ($self) = @_;
 	print $GUI->headers();
 	print $GUI->startPage("Minecraft Server Admin");
-	$self->{output} = $self->{output}.$GUI->divStart("menu");
+	$self->{output} = $self->{output}.$GUI->divStart("headbox");
+        $self->{output} = $self->{output}.$GUI->divStart("header");
+	$self->{output} = $self->{output}.$GUI->h1("center", "Minecraft Server Admin Page");
+        $self->{output} = $self->{output}.$GUI->divEnd();
 	$self->renderLogin();
 	$self->{output} = $self->{output}.$GUI->divEnd();
 	$self->displayPage();
