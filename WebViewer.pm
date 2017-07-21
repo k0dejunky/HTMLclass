@@ -38,7 +38,7 @@ sub start {
 }
 sub renderLogin {
 	my ($self) = @_;
-#	$self->{output} = $self->{output}.$GUI->divStart("logon", "center");
+	$self->{output} = $self->{output}.$GUI->divStart("logon", "center");
 	$self->{output} = $self->{output}.$GUI->divStart("logon1", "vertCenter");
         $self->{output} = $self->{output}.$GUI->h1("center", "Log in below");
         $self->{output} = $self->{output}.$GUI->br();
@@ -50,7 +50,7 @@ sub renderLogin {
 	$self->{output} = $self->{output}.$GUI->input("submit", "submit","login");
 	$self->{output} = $self->{output}.$GUI->formEnd();
 	$self->{output} = $self->{output}.$GUI->divEnd();
- #       $self->{output} = $self->{output}.$GUI->divEnd();
+        $self->{output} = $self->{output}.$GUI->divEnd();
 }
 sub displayPage{
 	my ($self) = @_;
