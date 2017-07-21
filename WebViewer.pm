@@ -40,7 +40,6 @@ sub renderLogin {
 	my ($self) = @_;
 	$self->{output} = $self->{output}.$GUI->divStart("logon", "center");
 	$self->{output} = $self->{output}.$GUI->divStart("logon1", "vertCenter");
-#        $self->{output} = $self->{output}.$GUI->divStart("logon2", "center");
         $self->{output} = $self->{output}.$GUI->h1("center", "Log in below");
         $self->{output} = $self->{output}.$GUI->br();
 	$self->{output} = $self->{output}.$GUI->formStart("center","index.cgi", "post", "login");
@@ -52,7 +51,6 @@ sub renderLogin {
 	$self->{output} = $self->{output}.$GUI->formEnd();
 	$self->{output} = $self->{output}.$GUI->divEnd();
         $self->{output} = $self->{output}.$GUI->divEnd();
-#	$self->{output} = $self->{output}.$GUI->divEnd();
 }
 sub displayPage{
 	my ($self) = @_;
