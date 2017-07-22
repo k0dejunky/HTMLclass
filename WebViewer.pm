@@ -56,6 +56,10 @@ sub renderHomePage {
 	
 }
 
+sub renderServerOutput {
+	#will display the Minecraft server output
+
+}
 sub renderMenu {
 
 }
