@@ -34,5 +34,26 @@ sub login {
 	return $response;
 }
 
+sub restartServer {
+
+}
+
+sub stopServer {
+
+}
+
+sub startServer {
+
+
+}
+
+sub firstStart {
+
+}
+
+sub reset {
+
+}
+
 
 1;
