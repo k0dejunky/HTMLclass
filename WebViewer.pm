@@ -52,6 +52,26 @@ sub renderLogin {
 	$self->{output} = $self->{output}.$GUI->divEnd();
         $self->{output} = $self->{output}.$GUI->divEnd();
 }
+sub renderHomePage {
+	
+}
+
+sub renderMenu {
+
+}
+
+sub renderFooter{
+
+}
+
+sub renderHeader {
+
+}
+
+sub renderProfile {
+
+}
+
 sub displayPage{
 	my ($self) = @_;
 	print $self->{output};
