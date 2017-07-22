@@ -46,4 +46,24 @@ sub login {
 		return $loginResponce;
 	}
 }
+
+sub processMode {
+
+}
+
+sub setMode {
+
+}
+
+sub restartServer {
+
+}
+
+sub stopServer {
+
+}
+
+sub getMods {
+
+}
 1;
