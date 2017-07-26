@@ -86,7 +86,7 @@ sub clearPage {
 
 sub headers {
         my ($self) = @_;
-        return "Content-type: text/html\n\n";
+        return "Content-type: text/html\n";
 }
 sub startPage {
         my ($self, $title) = @_;

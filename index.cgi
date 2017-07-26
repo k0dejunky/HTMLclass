@@ -15,6 +15,7 @@ my $view = WebViewer->new();
 my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
+
 if(<STDIN>){
 	for(<STDIN>) {
 		$input = $input.$_;
@@ -24,6 +25,7 @@ if(<STDIN>){
 	}
 }else{
 	$view->start();
+
 }
 
 sub processRequest {
