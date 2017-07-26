@@ -52,10 +52,27 @@ sub renderLogin {
 	$self->{output} = $self->{output}.$GUI->divEnd();
         $self->{output} = $self->{output}.$GUI->divEnd();
 }
+sub renderLoginError {
+	my ($self, $string) = @_;
+        $self->{output} = $self->{output}.$GUI->divStart("logon", "center");
+        $self->{output} = $self->{output}.$GUI->divStart("logon1", "vertCenter");
+        $self->{output} = $self->{output}.$GUI->h1("center", "Log in below");
+	$self->{output} = $self->{output}.$GUI->span ($string, "center");
+        $self->{output} = $self->{output}.$GUI->br();
+        $self->{output} = $self->{output}.$GUI->formStart("center","index.cgi", "post", "login");
+        $self->{output} = $self->{output}.$GUI->input("username", "text", "username", "20", "20");
+        $self->{output} = $self->{output}.$GUI->br();
+        $self->{output} = $self->{output}.$GUI->input("pword", "password", "pword", "20", "20");
+        $self->{output} = $self->{output}.$GUI->br();
+        $self->{output} = $self->{output}.$GUI->input("submit", "submit","login");
+        $self->{output} = $self->{output}.$GUI->formEnd();
+        $self->{output} = $self->{output}.$GUI->divEnd();
+        $self->{output} = $self->{output}.$GUI->divEnd();
+
+}
 sub renderHomePage {
 	
 }
-
 sub renderServerOutput {
 	#will display the Minecraft server output
 

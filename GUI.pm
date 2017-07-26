@@ -116,8 +116,15 @@ sub displayPage {
 }
 
 sub span {
-        my ($self, $string) = @_;
-	return "<span>".$string."</span> ";
+	my $size = scalar @_;
+	if ($size == 2){
+		my ($self, $string) = @_;
+		return "<span>".$string."</span> ";
+	}
+	if ($size == 3){
+		my ($self, $string, $class) = @_;
+		return "<span class=$class>$string</span>";
+	}
 }
 
 
