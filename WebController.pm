@@ -46,18 +46,21 @@ sub login {
 		return $loginResponce;
 	}
 }
+my @uname;
+my @pword;
+my @mtd;
 sub processRequest {
 	my ($self, $mdl, $INPUT) = @_;
 	if ((index($INPUT, "username")>0)&&(index($INPUT, "password")>0)&&(index($INPUT, "submit")>0)){
 		my  ($username, $password, $method)= $self->parceInput($INPUT);
 		if (index($username, "username=")>0){
-			my @uname = $self->parceInput($username);
+			@uname = $self->parceInput($username);
 		}
 		if (index($password, "pword=")>0){
-			my @pword = $self->parceInput($password);
+			@pword = $self->parceInput($password);
 		}
 		if (index($method, "submit=")>0){
-			my @mtd = $self->parceInput($method);
+			@mtd = $self->parceInput($method);
 		}
 	}
 	return (\@uname,\@pword,\@mtd);
