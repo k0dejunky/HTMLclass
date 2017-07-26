@@ -24,7 +24,7 @@ sub new{
 sub start {
 	my ($self) = @_;
 	print $GUI->headers();
-	print "Set-Cookie: cookie_name=theshityo;expires=Wed, 26-Jul-2017 16:00:00 PST;path=/;domain=svn.k0dejunky.com/cgi-bin\n\n;";
+	print "Set-Cookie: name=theshityo; expires=Wed, 26-Jul-2017 16:00:00 PST; path=/; domain=svn.k0dejunky.com/cgi-bin/\n\n";
 	print $GUI->startPage("Minecraft Server Admin");
 	$self->{output} = $self->{output}.$GUI->divStart("main");
 	$self->{output} = $self->{output}.$GUI->divStart("headbox");
