@@ -48,25 +48,25 @@ sub login {
 }
 sub processRequest {
 	my ($self, $mdl, $INPUT) = @_;
-	if ((index($INPUT, "username")>0)&&(index($INPUT, "password")>0)&&(index($INPUT, "submit"))){
+	if ((index($INPUT, "username")>0)&&(index($INPUT, "password")>0)&&(index($INPUT, "submit")>0)){
 		my  ($username, $password, $method)= $self->parceInput($INPUT);
 		if (index($username, "username=")>0){
-			@uname = $self->parceInput($username);
+			my @uname = $self->parceInput($username);
 		}
 		if (index($password, "pword=")>0){
-			@pword = $self->parceInput($password);
+			my @pword = $self->parceInput($password);
 		}
 		if (index($method, "submit=")>0){
-			@mtd = $self->parceInput($method);
+			my @mtd = $self->parceInput($method);
 		}
 	}
-	return @uname @pword @mtd;
+	return (\@uname,\@pword,\@mtd);
 }
 
 sub parceInput {
 	my $string = @_;
 	if ((index($string, "&")>0)&&(index($string, "=")>0)){
-		return split(/&/,$sting);
+		return split(/&/,$string);
 	}elsif (index($string, "=")>0){
 		return split(/=/,$string);
 	}
