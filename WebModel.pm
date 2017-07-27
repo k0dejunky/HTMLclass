@@ -27,7 +27,9 @@ sub new {
         return($self);
 
 }
-
+sub sendServerMessage {
+	my $string = @_;
+}
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
