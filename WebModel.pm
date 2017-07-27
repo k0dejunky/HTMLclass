@@ -9,7 +9,9 @@ use strict;
 use warnings;
 
 #use WebPageController;
+
 use DBI;
+use Digest::SHA qw(hmac_sha256_base64);
 
 if (-e "db.conf"){
         #open the file and read into the config array
@@ -30,6 +32,17 @@ sub new {
 sub sendServerMessage {
 	my $string = @_;
 }
+sub getSessionId{
+	my ($string, $key) = @_;
+	my $mac = hmac_sha256_base_64($string, $key);
+	return $mac;
+}
+sub setCookie{
+	#input the database values into the sessions table
+	my ($sessionId, $expire, $path) = @_;
+	#database input here;
+}
+
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
