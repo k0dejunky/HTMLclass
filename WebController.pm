@@ -11,6 +11,7 @@ use strict;
 use warnings;
 
 use WebModel;
+use Digest::SHA qw(hmac_sha256_base64);
 
 my $mdl = WebModel->new();
 
