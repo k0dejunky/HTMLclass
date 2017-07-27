@@ -34,7 +34,7 @@ sub setCookie {
 
 sub getCookie {
 	my ($self, $mdl, $cookie) = @_;
-	
+	return $ENV{'HTTP_COOKIE'};
 }
 
 sub login {

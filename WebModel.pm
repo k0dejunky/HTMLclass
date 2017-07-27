@@ -33,7 +33,9 @@ sub login {
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
 	return $response;
 }
-
+sub createSessionId {
+	#create the session id here if authenticated. Use the username sha256 key to generate session id
+}
 sub restartServer {
 
 }

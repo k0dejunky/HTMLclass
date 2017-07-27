@@ -27,7 +27,9 @@ if(<STDIN>){
 	$view->start();
 
 }
-
+if ($ENV{'HTTP_COOKIE'}){
+	print $ENV{'HTTP_COOKIE'};
+}
 sub processRequest {
 	my ($ctrl, $index) = @_;
 	my ($username, $password, $method) = split(/&/,$index);
