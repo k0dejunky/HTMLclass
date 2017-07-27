@@ -46,16 +46,16 @@ sub validateSessionId {
 	#get session info from database and validate if the session is still active.
 	my ($sessionID) = @_;
 	
-	if (stuff = stuff){
-		return "valid";
-	}else{
-		return "error";
-	}
+#	if (my $stuff == $stuff){
+#		return "valid";
+#	}else{
+#		return "error";
+#	}
 }
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
-	return $response;
+	#return $response;
 }
 sub createSessionId {
 	#create the session id here if authenticated. Use the username sha256 key to generate session id

@@ -11,7 +11,6 @@ use strict;
 use warnings;
 
 use WebModel;
-use Digest::SHA qw(hmac_sha256_base64);
 
 my $mdl = WebModel->new();
 
@@ -47,11 +46,16 @@ sub login {
 		return $loginResponce;
 	}
 }
-my @uname;
-my @pword;
-my @mtd;
-sub processRequest {
+#my @uname;
+#my @pword;
+#my @mtd;
+sub processRequest{
+	
+}
+
+sub parcePost {
 	my ($self, $mdl, $INPUT) = @_;
+	my (@uname, @pword, @mtd);
 	if ((index($INPUT, "username")>0)&&(index($INPUT, "password")>0)&&(index($INPUT, "submit")>0)){
 		my  ($username, $password, $method)= $self->parceInput($INPUT);
 		if (index($username, "username=")>0){
@@ -71,7 +75,7 @@ sub parceInput {
 	my $string = @_;
 	if ((index($string, "&")>0)&&(index($string, "=")>0)){
 		return split(/&/,$string);
-	}elsif (index($string, "=")>0){
+	}elsif (index($string, "=")>0&&(index($string, "&")==-1)){
 		return split(/=/,$string);
 	}
 }

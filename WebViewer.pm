@@ -26,15 +26,15 @@ sub start {
 	print $GUI->headers();
 	print "Set-Cookie: name=theshityo; path=/cgi-bin/;\n\n";
 	print $GUI->startPage("Minecraft Server Admin");
-	$self->{output} = $self->{output}.$GUI->divStart("main");
-	$self->{output} = $self->{output}.$GUI->divStart("headbox");
-        $self->{output} = $self->{output}.$GUI->divStart("header");
-	$self->{output} = $self->{output}.$GUI->h1("center", "Minecraft Server Admin Page");
-        $self->{output} = $self->{output}.$GUI->divEnd();
-	$self->{output} = $self->{output}.$GUI->br();
+	$self->{output} .= $GUI->divStart("main");
+	$self->{output} .= $GUI->divStart("headbox");
+        $self->{output} .= $GUI->divStart("header");
+	$self->{output} .= $GUI->h1("center", "Minecraft Server Admin Page");
+        $self->{output} .= $GUI->divEnd();
+	$self->{output} .= $GUI->br();
 	$self->renderLogin();
-	$self->{output} = $self->{output}.$GUI->divEnd();
-        $self->{output} = $self->{output}.$GUI->divEnd();
+	$self->{output} .= $GUI->divEnd();
+        $self->{output} .= $GUI->divEnd();
 	$self->displayPage();
 }
 sub renderLogin {
