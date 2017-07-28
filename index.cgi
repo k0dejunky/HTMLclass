@@ -26,7 +26,7 @@ if(<STDIN>){
 			if($response eq "homePage"){
 				$tmpl->headers();
 				$tmpl->renderHomePage();
-			}elsif($response eq "FAILED"){
+			}elsif($response eq "LOGIN_FAILED"){
 				$tmpl->headers();
 				$tmpl->renderLoginFailed();
 			}
