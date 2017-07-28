@@ -24,7 +24,7 @@ if (-e "db.conf"){
 sub new {
         my $class = shift;
         my %options = @_;
-        my $self = {%options};
+        my $self = {SESSIONID => "", %options};
         bless($self, $class);
         return($self);
 
@@ -56,6 +56,24 @@ sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
 	#return $response;
+	if ($response){
+                $self->createSessionId($user, $pass);
+
+		return "homePage";
+	}else{
+		$self->logFailedLogin();
+		return "LOGIN_FAILED";
+	}
+}
+sub logFailedLogin {
+	my ($self, $connection, %userData) = @_;
+	if ($userData{failed} == $self->{failLimit}){
+		$self->blockIP($userData{IP});	
+		return "BLOCKED";
+	}else{
+		return "TRY_AGAIN";
+	}
+	
 }
 sub createSessionId {
 	#create the session id here if authenticated. Use the username sha256 key to generate session id

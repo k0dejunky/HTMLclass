@@ -7,12 +7,12 @@ use strict;
 use warnings;
 
 use WebViewer;
-#use WebController;
+use WebController;
 use HTTP::Request::Common qw(POST);
 my (@mtd, @uname, @pword);
 my @POST;
 my $view = WebViewer->new();
-#my $ctrl = WebController->new();
+my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@username, @password, @method);
@@ -29,33 +29,4 @@ if(<STDIN>){
 }else{
 	$view->start();
 
-}
-if ($ENV{'HTTP_COOKIE'}){
-	print $ENV{'HTTP_COOKIE'};
-}
-sub processRequest {
-	my ($ctrl, $index) = @_;
-	my ($username, $password, $method) = split(/&/,$index);
-	if (index($username, "username=")>0){
-		@uname = split(/=/, $username);
-	}else{
-		$view->renderLoginError("NoAuthDetails");
-	}
-	if (index($password, "pword")>0){
-		@pword = split(/=/, $password);
-	}else{
-		$view->renderLoginError("NoAuthDetails");
-	}
-	if (index($method, "submit=")>0){
-		@mtd =  split(/=/, $method);
-		if ($mtd[1] eq "login"){
-			my $resp = $ctrl->login($uname[1],$pword[1]);
-			if ($resp == 0){
-				$view->homePage();
-			}else {
-				$view->renderLoginError("Invalid Credentials");
-			}
-		}
-
-	}	
 }
