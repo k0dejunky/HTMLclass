@@ -90,7 +90,7 @@ sub renderHomePage {
         $self->{output} .= $GUI->divEnd();
         $self->{output} .= $GUI->divEnd();
         $self->displayPage();
-
+}
 sub renderServerOutput {
 	#will display the Minecraft server output
 
