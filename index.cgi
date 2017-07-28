@@ -25,7 +25,7 @@ if(<STDIN>){
 	if($input){
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
-			my $response = $ctrl->login($username[1], $password[1]));
+			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
 				$tmpl->renderHomePage();
 			}elsif($response eq "FAILED"){
