@@ -33,8 +33,6 @@ sub setCookie {
 }
 
 sub getCookie {
-#	my ($self, $mdl, $cookie) = @_;
-#	return $ENV{'HTTP_COOKIE'};
 	my ($cookiename) = @_;
 	my @cookies = split(/\s*;\s*/, $ENV{'HTTP_COOKIE'});
 	foreach (@cookies){
@@ -53,9 +51,6 @@ sub login {
 		return $loginResponce;
 	}
 }
-#my @uname;
-#my @pword;
-#my @mtd;
 sub processRequest{
 	
 }
