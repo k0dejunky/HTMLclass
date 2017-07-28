@@ -18,20 +18,22 @@ my $input;
 my (@username, @password, @method);
 if(<STDIN>){
 	my ($buffer) = "";
-	$input .= <>;
+	$input = <>;
 	$tmpl->headers();
 	 print "\n";
-	print $input;
-	if(length($buffer)>0){
+	if($input){
+		print $input;
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
 				$tmpl->headers();
 				$tmpl->renderHomePage();
+				$tmpl->displayPage();
 			}elsif($response eq "LOGIN_FAILED"){
 				$tmpl->headers();
 				$tmpl->renderLoginError($response);
+				$tmpl->displayPage();
 			}
 		}
 	}
