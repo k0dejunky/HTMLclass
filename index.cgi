@@ -28,7 +28,7 @@ if(<STDIN>){
 				$tmpl->renderHomePage();
 			}elsif($response eq "LOGIN_FAILED"){
 				$tmpl->headers();
-				$tmpl->renderLoginError();
+				$tmpl->renderLoginError($response);
 			}
 		}
 	}
