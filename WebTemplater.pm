@@ -54,20 +54,22 @@ sub renderLogin {
 }
 sub renderLoginError {
 	my ($self, $string) = @_;
-        $self->{output} .= $GUI->divStart("logon", "center");
-        $self->{output} .= $GUI->divStart("logon1", "vertCenter");
-        $self->{output} .= $GUI->h1("center", "Log in below");
-	$self->{output} .= $GUI->span ($string, "center");
-        $self->{output} .= $GUI->br();
-        $self->{output} .= $GUI->formStart("center","index.cgi", "post", "login");
-        $self->{output} .= $GUI->input("username", "text", "username", "20", "20");
-        $self->{output} .= $GUI->br();
-        $self->{output} .= $GUI->input("pword", "password", "pword", "20", "20");
-        $self->{output} .= $GUI->br();
-        $self->{output} .= $GUI->input("submit", "submit","login");
-        $self->{output} .= $GUI->formEnd();
-        $self->{output} .= $GUI->divEnd();
-        $self->{output} .= $GUI->divEnd();
+	if ($string eq "LOGIN_FAILED"){
+	        $self->{output} .= $GUI->divStart("logon", "center");
+        	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
+	        $self->{output} .= $GUI->h1("center", "Log in below");
+		$self->{output} .= $GUI->span ("error", $string);
+	        $self->{output} .= $GUI->br();
+        	$self->{output} .= $GUI->formStart("center","index.cgi", "post", "login");
+	        $self->{output} .= $GUI->input("username", "text", "username", "20", "20");
+	        $self->{output} .= $GUI->br();
+	        $self->{output} .= $GUI->input("pword", "password", "pword", "20", "20");
+		$self->{output} .= $GUI->br();
+	        $self->{output} .= $GUI->input("submit", "submit","login");
+	        $self->{output} .= $GUI->formEnd();
+	        $self->{output} .= $GUI->divEnd();
+		$self->{output} .= $GUI->divEnd();
+	}
 
 }
 sub renderHomePage {

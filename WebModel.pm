@@ -58,7 +58,7 @@ sub login {
 	#return $response;
 	if ($response){
                 $self->createSessionId($user, $pass);
-
+#		$self->logSuccessfulLogin($response{userid});
 		return "homePage";
 	}else{
 		$self->logFailedLogin();
