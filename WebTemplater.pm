@@ -102,5 +102,6 @@ sub renderProfile {
 sub displayPage{
 	my ($self) = @_;
 	print $self->{output};
+	$self->{output} = "";
 }
 1;
