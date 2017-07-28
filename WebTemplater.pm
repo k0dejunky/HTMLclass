@@ -77,8 +77,20 @@ sub renderLoginErrorPage {
 
 }
 sub renderHomePage {
-	
-}
+	my ($self) = @_;
+        $self->headers();
+        print "Set-Cookie: name=theshityo; path=/cgi-bin/;\n\n";
+        print $GUI->startPage("Minecraft Server Admin");
+        $self->{output} .= $GUI->divStart("main");
+        $self->{output} .= $GUI->divStart("headbox");
+        $self->{output} .= $GUI->divStart("header");
+        $self->{output} .= $GUI->h1("center", "Minecraft Server Admin Page");
+        $self->{output} .= $GUI->divEnd();
+        $self->{output} .= $GUI->br();
+        $self->{output} .= $GUI->divEnd();
+        $self->{output} .= $GUI->divEnd();
+        $self->displayPage();
+
 sub renderServerOutput {
 	#will display the Minecraft server output
 
