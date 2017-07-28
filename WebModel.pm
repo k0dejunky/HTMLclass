@@ -8,8 +8,6 @@ package WebModel;
 use strict;
 use warnings;
 
-#use WebPageController;
-
 use DBI;
 use Digest::SHA qw(hmac_sha256_base64);
 
@@ -18,8 +16,6 @@ if (-e "db.conf"){
 }else{
         die("error no db.conf file");
 }
-
-#my $ctrl = WebPageController->new();
 
 sub new {
         my $class = shift;
@@ -45,17 +41,10 @@ sub setCookie{
 sub validateSessionId {
 	#get session info from database and validate if the session is still active.
 	my ($sessionID) = @_;
-	
-#	if (my $stuff == $stuff){
-#		return "valid";
-#	}else{
-#		return "error";
-#	}
 }
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
-	#return $response;
 	if ($response){
                 $self->createSessionId($user, $pass);
 #		$self->logSuccessfulLogin($response{userid});
@@ -98,6 +87,4 @@ sub firstStart {
 sub reset {
 
 }
-
-
 1;
