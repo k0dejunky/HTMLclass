@@ -13,16 +13,15 @@ my (@mtd, @uname, @pword);
 my @POST;
 my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
+my $length;
 if ($ENV{CONTENT_LENGTH}){
-	my $length = $ENV{CONTENT_LENGTH};
-}else{
-	my $length;
+	 $length = $ENV{CONTENT_LENGTH};
 }
 my $input;
 my (@username, @password, @method);
 if(<STDIN>){
 	my ($buffer) = "";
-	read(<STDIN>, $buffer, $length);
+	$input .= <>;	
 	if(length($buffer)>0){
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
