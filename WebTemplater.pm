@@ -22,7 +22,7 @@ sub new{
 
 sub start {
 	my ($self) = @_;
-	print $GUI->headers();
+	$self->headers();
 	print "Set-Cookie: name=theshityo; path=/cgi-bin/;\n\n";
 	print $GUI->startPage("Minecraft Server Admin");
 	$self->{output} .= $GUI->divStart("main");
@@ -35,6 +35,10 @@ sub start {
 	$self->{output} .= $GUI->divEnd();
         $self->{output} .= $GUI->divEnd();
 	$self->displayPage();
+}
+sub headers {
+	my ($self) = @_;
+	print $GUI->headers();
 }
 sub renderLogin {
 	my ($self) = @_;

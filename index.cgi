@@ -13,10 +13,7 @@ my (@mtd, @uname, @pword);
 my @POST;
 my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
-my $length;
-if ($ENV{CONTENT_LENGTH}){
-	 $length = $ENV{CONTENT_LENGTH};
-}
+my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@username, @password, @method);
 if(<STDIN>){
@@ -27,8 +24,10 @@ if(<STDIN>){
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
+				$tmpl->headers();
 				$tmpl->renderHomePage();
 			}elsif($response eq "FAILED"){
+				$tmpl->headers();
 				$tmpl->renderLoginFailed();
 			}
 		}
