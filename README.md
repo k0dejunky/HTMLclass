@@ -1,7 +1,17 @@
 # WebMVC
-Perl MVC - This MVC is currently being developed. It contains the normal parts of an MVC as well as GUI.pm which uses functions named after html tags and returns the formated html depending on the number of paramerters the function is called with. 
 
-example:
-	$view->h1("center","this is a heading");
+Perl MVC - This MVC is currently in development. It is in the very early stages and isn't ready for use. The files contained in the repository are:
 
-in the above example GUI.pm will return <noformat> <h1 class="center"> This is a heading </h1> </noformat>
+WebModel.pm - This holds the sites data and mode information. The module uses WebDB.pm to push and retrieve all data from the mysql database. 
+
+WebDB.pm - uses db.conf to read the database connection information. It opens and closes the connection with each action to prevent memory leaks. 
+
+WebController.pm - This passes user data to WebModel.pm and view data to index.cgi to display the correct page 
+
+index.cgi - This is the view. It uses WebTemplater.pm to choose what is to be displayed depending on the info retrieved from WebController.pm
+
+WebTemplater.pm - This module uses GUI.pm to generate the requested page.
+
+GUI.pm - This module simply returns an HTML string depending on the input and function used. The function naming convention used directly matches the HTML tag name. Ex: html tag h1 would be function call $GUI->h1(optional_class_name, text).
+
+
