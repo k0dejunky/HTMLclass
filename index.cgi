@@ -18,7 +18,10 @@ my $input;
 my (@username, @password, @method);
 if(<STDIN>){
 	my ($buffer) = "";
-	$input .= <>;	
+	$input .= <>;
+	$tmpl->headers();
+	 print "\n";
+	print $input;
 	if(length($buffer)>0){
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
