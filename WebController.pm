@@ -33,8 +33,15 @@ sub setCookie {
 }
 
 sub getCookie {
-	my ($self, $mdl, $cookie) = @_;
-	return $ENV{'HTTP_COOKIE'};
+#	my ($self, $mdl, $cookie) = @_;
+#	return $ENV{'HTTP_COOKIE'};
+	my ($cookiename) = @_;
+	my @cookies = split(/\s*;\s*/, $ENV{'HTTP_COOKIE'});
+	foreach (@cookies){
+		my @tokens = split(/=/, $_);
+		return $tokens[1] if($tokens[0] == $cookiename);
+	}
+	return '';
 }
 
 sub login {
