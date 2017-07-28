@@ -13,7 +13,9 @@ my (@mtd, @uname, @pword);
 my @POST;
 my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
-my $length = $ENV{CONTENT_LENGTH};
+if ($ENV{CONTENT_LENGTH}){
+	my $length = $ENV{CONTENT_LENGTH};
+}
 my $input;
 my (@username, @password, @method);
 if(<STDIN>){
