@@ -7,7 +7,6 @@
 package WebViewer;
 
 use GUI;
-use WebController;
 use strict;
 use warnings;
 
