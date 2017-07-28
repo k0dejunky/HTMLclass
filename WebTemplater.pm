@@ -4,7 +4,7 @@
 #Date July 7, 2017
 #Version 1.0
 
-package WebViewer;
+package WebTemplater;
 
 use GUI;
 use strict;
