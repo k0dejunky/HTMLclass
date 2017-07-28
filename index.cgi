@@ -7,12 +7,12 @@ use strict;
 use warnings;
 
 use WebViewer;
-use WebController;
+#use WebController;
 use HTTP::Request::Common qw(POST);
 my (@mtd, @uname, @pword);
 my @POST;
 my $view = WebViewer->new();
-my $ctrl = WebController->new();
+#my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@username, @password, @method);
@@ -38,7 +38,6 @@ sub processRequest {
 	my ($username, $password, $method) = split(/&/,$index);
 	if (index($username, "username=")>0){
 		@uname = split(/=/, $username);
-		#rint $uname{1};
 	}else{
 		$view->renderLoginError("NoAuthDetails");
 	}
