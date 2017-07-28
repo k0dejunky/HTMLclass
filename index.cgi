@@ -15,14 +15,15 @@ my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
 if ($ENV{CONTENT_LENGTH}){
 	my $length = $ENV{CONTENT_LENGTH};
+}else{
+	my $length;
 }
 my $input;
 my (@username, @password, @method);
 if(<STDIN>){
-	for(<STDIN>) {
-		$input = $input.$_;
-	}
-	if($input){
+	my ($buffer) = "";
+	read(<STDIN>, $buffer, $length);
+	if(length($buffer)>0){
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
@@ -35,5 +36,5 @@ if(<STDIN>){
 	}
 }else{
 	$tmpl->start();
-
+	print $ENV{REQUEST_METHOD};
 }
