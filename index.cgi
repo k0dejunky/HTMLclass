@@ -6,12 +6,12 @@
 use strict;
 use warnings;
 
-use WebViewer;
+use WebTemplater;
 use WebController;
 use HTTP::Request::Common qw(POST);
 my (@mtd, @uname, @pword);
 my @POST;
-my $view = WebViewer->new();
+my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
@@ -23,10 +23,15 @@ if(<STDIN>){
 	if($input){
 		(@username, @password, @method) = $ctrl->parcePost($input);
 		if($method[1] eq "login"){
-			$view->drawPage($ctrl->login($username[1], $password[1]), $ctrl->{cookie});
+			my $response = $ctrl->login($username[1], $password[1]));
+			if($response eq "homePage"){
+				$tmpl->renderHomePage();
+			}elsif($response eq "FAILED"){
+				$tmpl->renderLoginFailed();
+			}
 		}
 	}
 }else{
-	$view->start();
+	$tmpl->start();
 
 }
