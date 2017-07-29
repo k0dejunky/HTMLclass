@@ -42,7 +42,7 @@ sub headers {
 }
 sub startPage{
 	my ($self) = @_;
-	$self->{output} .= $GUI->startPage();
+	$self->{output} .= $GUI->startPage("Minecraft Server Admin Page");
 }
 sub renderLogin {
 	my ($self) = @_;
@@ -64,7 +64,14 @@ sub renderLoginErrorPage {
 	my ($self, $string) = @_;
 	if ($string eq "LOGIN_FAILED"){
 		$self->startPage();
-	        $self->{output} .= $GUI->divStart("logon", "center");
+	        $self->{output} .= $GUI->divStart("main");
+        	$self->{output} .= $GUI->divStart("headbox");
+	        $self->{output} .= $GUI->divStart("header");
+      		$self->{output} .= $GUI->h1("center", "Minecraft Server Admin Page");
+        	$self->{output} .= $GUI->divEnd();
+	        $self->{output} .= $GUI->br();
+
+		$self->{output} .= $GUI->divStart("logon", "center");
         	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
 	        $self->{output} .= $GUI->h1("center", "Log in below");
 		$self->{output} .= $GUI->span ("error", $string);
