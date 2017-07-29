@@ -23,9 +23,6 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 	}
 	if($input){
 		@data  = split("&",$input);
-		print "<p>username: " .$data[0];
-                print "<br><p>password: " .$data[1];
-                print "<br><p>method: " .$data[2];
 		@method = split("=",$data[2]);
 		@username = split ("=",$data[0]);
 		@password = split ("=",$data[1]);
