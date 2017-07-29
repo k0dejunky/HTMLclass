@@ -43,7 +43,7 @@ sub getCookie {
 }
 
 sub login {
-	my ($self, $mdl, $user, $pass) = @_;
+	my ($self, $user, $pass) = @_;
 	my $loginResponce = $mdl->login($user, $pass);
 	if ($loginResponce  == 0){
 		return 0;
