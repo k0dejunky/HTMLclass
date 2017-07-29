@@ -57,7 +57,7 @@ sub login {
 }
 sub logFailedLogin {
 	my ($self, $connection, %userData) = @_;
-	if ($userData{failed} == $self->{failLimit}){
+	if ($userData{failed} eq $self->{failLimit}){
 		$self->blockIP($userData{IP});	
 		return "BLOCKED";
 	}else{
