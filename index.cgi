@@ -29,7 +29,6 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 		@method = split("=",$data[2]);
 		@username = split ("=",$data[0]);
 		@password = split ("=",$data[1]);
-		print "<br><br>method: " .$method[0] . "  " .$method[1];
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
