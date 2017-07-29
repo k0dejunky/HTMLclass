@@ -40,6 +40,10 @@ sub headers {
 	my ($self) = @_;
 	print $GUI->headers();
 }
+sub startPage{
+	my ($self) = @_;
+	$self->{output} .= $GUI->startPage();
+}
 sub renderLogin {
 	my ($self) = @_;
 	$self->{output} .= $GUI->divStart("logon", "center");
@@ -59,6 +63,7 @@ sub renderLogin {
 sub renderLoginErrorPage {
 	my ($self, $string) = @_;
 	if ($string eq "LOGIN_FAILED"){
+		$self->startPage();
 	        $self->{output} .= $GUI->divStart("logon", "center");
         	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
 	        $self->{output} .= $GUI->h1("center", "Log in below");
