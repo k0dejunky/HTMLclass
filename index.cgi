@@ -21,11 +21,7 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 	for (<>){
 		$input .= $_;
 	}
-	$tmpl->headers();
-	print "\n";
-	print "headers passed correctly";
 	if($input){
-		print $input;
 		@data  = split("&",$input);
 		print "<p>username: " .$data[0];
                 print "<br><p>password: " .$data[1];
