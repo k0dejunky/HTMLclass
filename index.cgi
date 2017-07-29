@@ -16,12 +16,9 @@ my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@data,@username, @password, @method);
-while (<>){
-	$input .= <>;
-}
 if($ENV{REQUEST_METHOD} eq "POST"){
 	my ($buffer) = "";
-	for (<STDIN>){
+	for (<>){
 		$input .= $_;
 	}
 	$tmpl->headers();
