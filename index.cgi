@@ -16,7 +16,7 @@ my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@data,@username, @password, @method);
-while (<STDOUT>){
+while (<>){
 	$input .= <>;
 }
 if($ENV{REQUEST_METHOD} eq "POST"){
