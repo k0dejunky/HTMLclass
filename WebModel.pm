@@ -11,6 +11,7 @@ use warnings;
 use DBI;
 use Digest::SHA qw(hmac_sha256_base64);
 
+my %config = "";
 if (-e "db.conf"){
         #open the file and read into the config array
 }else{

@@ -24,9 +24,9 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 	for (<STDIN>){
 		$input .= $_;
 	}
-	$tmpl->headers();
-	print "\n";
-	print "headers passed correctly";
+#	$tmpl->headers();
+#	print "\n";
+#	print "headers passed correctly";
 	if($input){
 #		print $input;
 		@data  = split("&",$input);
@@ -41,10 +41,12 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
 				$tmpl->headers();
+				print "\n";
 				$tmpl->renderHomePage();
 				$tmpl->displayPage();
 			}elsif($response eq "LOGIN_FAILED"){
 				$tmpl->headers();
+				print "\n";
 				$tmpl->renderLoginError($response);
 				$tmpl->displayPage();
 			}
