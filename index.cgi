@@ -15,15 +15,28 @@ my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
-my (@username, @password, @method);
-if(<STDIN>){
+my (@data,@username, @password, @method);
+while (<STDOUT>){
+	$input .= <>;
+}
+if($ENV{REQUEST_METHOD} eq "POST"){
 	my ($buffer) = "";
-	$input = <>;
+	for (<STDIN>){
+		$input .= $_;
+	}
 	$tmpl->headers();
-	 print "\n";
+	print "\n";
+	print "headers passed correctly";
 	if($input){
-		print $input;
-		(@username, @password, @method) = $ctrl->parcePost($input);
+#		print $input;
+		@data  = split("&",$input);
+		print "<p>username: " .$data[0];
+                print "<br><p>password: " .$data[1];
+                print "<br><p>method: " .$data[2];
+		@method = split("=",$data[2]);
+		@username = split ("=",$data[0]);
+		@password = split ("=",$data[1]);
+		print "<br><br>method: " .$method[0] . "  " .$method[1];
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
@@ -35,8 +48,13 @@ if(<STDIN>){
 				$tmpl->renderLoginError($response);
 				$tmpl->displayPage();
 			}
+		}else{
+			print "<p>this is were im not supposed to be</p>";
 		}
+	}else{
+        	print "<p>this is were im not supposed to be no input detected</p>";
 	}
+
 }else{
 	$tmpl->start();
 	print $ENV{REQUEST_METHOD};

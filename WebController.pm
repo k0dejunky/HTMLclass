@@ -62,6 +62,7 @@ sub parcePost {
 		my  ($username, $password, $method)= $self->parceInput($INPUT);
 		if (index($username, "username=")>0){
 			@uname = $self->parceInput($username);
+			print $uname[0]." ".$uname[1];
 		}
 		if (index($password, "pword=")>0){
 			@pword = $self->parceInput($password);
@@ -74,7 +75,8 @@ sub parcePost {
 }
 
 sub parceInput {
-	my $string = @_;
+	my $string = shift;
+	print $string;
 	if ((index($string, "&")>0)&&(index($string, "=")>0)){
 		return split(/&/,$string);
 	}elsif (index($string, "=")>0&&(index($string, "&")==-1)){
