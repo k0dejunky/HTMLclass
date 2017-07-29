@@ -47,7 +47,7 @@ sub login {
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
 	if ($response){
-                $self->createSessionId($user, $pass);
+                $self->getSessionId($user, $pass);
 #		$self->logSuccessfulLogin($response{userid});
 		return "homePage";
 	}else{
@@ -56,13 +56,13 @@ sub login {
 	}
 }
 sub logFailedLogin {
-	my ($self, $connection, %userData) = @_;
-	if ($userData{failed} eq $self->{failLimit}){
-		$self->blockIP($userData{IP});	
-		return "BLOCKED";
-	}else{
-		return "TRY_AGAIN";
-	}
+#	my ($self, $connection, %userData) = @_;
+#	if ($userData{failed} eq $self->{failLimit}){
+#		$self->blockIP($userData{IP});	
+#		return "BLOCKED";
+#	}else{
+#		return "TRY_AGAIN";
+#	}
 	
 }
 sub createSessionId {
