@@ -123,7 +123,7 @@ sub span {
 	}
 	if ($size == 3){
 		my ($self, $class, $string) = @_;
-		return "<span class=$class>$string</span>";
+		return "<span class='$class'>$string</span>";
 	}
 }
 
