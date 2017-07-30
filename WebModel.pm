@@ -52,7 +52,7 @@ sub login {
 		return "homePage";
 	}else{
 		$self->logFailedLogin();
-		return "LOGIN_FAILED";
+		return "LOGIN FAILED";
 	}
 }
 sub logFailedLogin {
