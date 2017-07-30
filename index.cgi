@@ -36,7 +36,7 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 			}elsif($response eq "LOGIN FAILED"){
 				$tmpl->headers();
 				print "\n";
-				$tmpl->renderLoginErrorPage($response);
+				$tmpl->renderLoginErrorPage("error",$response);
 				$tmpl->displayPage();
 			}
 		}else{
