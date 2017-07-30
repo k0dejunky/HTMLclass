@@ -33,7 +33,7 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 				print "\n";
 				$tmpl->renderHomePage();
 				$tmpl->displayPage();
-			}elsif($response eq "LOGIN_FAILED"){
+			}elsif($response eq "LOGIN FAILED"){
 				$tmpl->headers();
 				print "\n";
 				$tmpl->renderLoginErrorPage($response);
