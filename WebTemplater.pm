@@ -62,7 +62,7 @@ sub renderLogin {
 }
 sub renderLoginErrorPage {
 	my ($self, $string) = @_;
-	if ($string eq "LOGIN_FAILED"){
+	if ($string eq "LOGIN FAILED"){
 		$self->startPage();
 	        $self->{output} .= $GUI->divStart("main");
         	$self->{output} .= $GUI->divStart("headbox");
