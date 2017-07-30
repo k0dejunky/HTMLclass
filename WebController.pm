@@ -45,7 +45,7 @@ sub getCookie {
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce eq "LOGIN_FAILED" ){
+	if ($loginResponce eq "LOGIN FAILED" ){
 		return $loginResponce;
 	}else{
 		return $loginResponce;
