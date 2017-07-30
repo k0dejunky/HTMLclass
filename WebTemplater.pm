@@ -74,7 +74,7 @@ sub renderLoginErrorPage {
 		$self->{output} .= $GUI->divStart("logon", "center");
         	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
 	        $self->{output} .= $GUI->h1("center", "Log in below");
-		$self->{output} .= $GUI->span("error", $string);
+		$self->{output} .= $GUI->span($string);
 	        $self->{output} .= $GUI->br();
         	$self->{output} .= $GUI->formStart("center","index.cgi", "post", "login");
 	        $self->{output} .= $GUI->input("username", "text", "username", "20", "20");

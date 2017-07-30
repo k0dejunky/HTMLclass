@@ -45,7 +45,7 @@ sub getCookie {
 sub login {
 	my ($self, $user, $pass) = @_;
 	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce eq "LOGIN FAILED" ){
+	if ($loginResponce eq "LOGIN FAILED"){
 		return $loginResponce;
 	}else{
 		return $loginResponce;
@@ -73,7 +73,6 @@ sub parcePost {
 	}
 	return (\@uname,\@pword,\@mtd);
 }
-
 sub parceInput {
 	my $string = shift;
 	print $string;
@@ -83,23 +82,18 @@ sub parceInput {
 		return split(/=/,$string);
 	}
 }
-
 sub processMode {
 
 }
-
 sub setMode {
 
 }
-
 sub restartServer {
 
 }
-
 sub stopServer {
 
 }
-
 sub getMods {
 
 }
