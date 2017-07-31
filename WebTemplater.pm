@@ -67,6 +67,7 @@ sub renderLogin {
 sub renderLoginErrorPage {
 	my ($self, $string) = @_;
 	if ($string eq "LOGIN_FAILED"){
+		$self->headers();
 		$self->startPage();
 	        $self->{output} .= $GUI->divStart("main");
         	$self->{output} .= $GUI->divStart("headbox");
@@ -77,7 +78,7 @@ sub renderLoginErrorPage {
 		$self->{output} .= $GUI->divStart("logon", "center");
         	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
 	        $self->{output} .= $GUI->h1("center", "Log in below");
-		$self->{output} .= $GUI->span($string);
+		$self->{output} .= $GUI->span("LOGIN FAILED TRY AGAIN");
 	        $self->{output} .= $GUI->br();
         	$self->{output} .= $GUI->formStart("center","index.cgi", "post", "login");
 	        $self->{output} .= $GUI->input("username", "text", "username", "20", "20");
@@ -88,11 +89,13 @@ sub renderLoginErrorPage {
 	        $self->{output} .= $GUI->formEnd();
 	        $self->{output} .= $GUI->divEnd();
 		$self->{output} .= $GUI->divEnd();
+		$self->displayPage();
 	}
 
 }
 sub renderHomePage {
 	my ($self) = @_;
+	$self->headers();
         $self->startPage();
         $self->{output} .= $GUI->divStart("main");
         $self->{output} .= $GUI->divStart("headbox");

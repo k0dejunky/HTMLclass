@@ -8,15 +8,10 @@ package WebModel;
 use strict;
 use warnings;
 
-use DBI;
+use WebDB;
 use Digest::SHA qw(hmac_sha256_base64);
 
-#my %config;
-if (-e "db.conf"){
-        #open the file and read into the config array
-}else{
-        die("error no db.conf file");
-}
+#my $db = WebDB->new();
 
 sub new {
         my $class = shift;
@@ -30,9 +25,9 @@ sub sendServerMessage{
 	my $string = @_;
 }
 sub getSessionId{
-	my ($string, $key) = @_;
-	my $mac = hmac_sha256_base_64($string, $key);
-	return $mac;
+	my ($self, $string, $key) = @_;
+	my $mac = hmac_sha256_base64($string, $key);
+	$self->{SESSIONID} = $mac;
 }
 sub setCookie{
 	#input the database values into the sessions table
@@ -45,8 +40,9 @@ sub validateSessionId {
 }
 sub login{
 	my ($self, $user, $pass) = @_;
+	#print "<p>".$user." ".$pass."</p>";
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
-	if ($response eq "some info here"){
+	if ($response eq ""){
                 $self->getSessionId($user, $pass);
 #		$self->logSuccessfulLogin($response{userid});
 		return "homePage";

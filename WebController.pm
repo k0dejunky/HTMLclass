@@ -40,16 +40,18 @@ sub getCookie {
 		my @tokens = split(/=/, $_);
 		return $tokens[1] if($tokens[0] eq $cookiename);
 	}
-	return '';
+#	return '';
 }
 
 sub login {
-	my ($self, $mdl, $user, $pass) = @_;
+	my ($self, $user, $pass) = @_;
+	#print "<p> user: ".$user."</p>";
+	#print "<p> pass: ".$pass."</p>";
 	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce eq "LOGIN_FAILED"){
+	if ($loginResponce){
 		return $loginResponce;
 	}else{
-		return $loginResponce;
+		return "NO_RESPONSE_TRY_AGAIN";
 	}
 }
 sub processRequest{
