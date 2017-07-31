@@ -11,7 +11,7 @@ use warnings;
 use DBI;
 use Digest::SHA qw(hmac_sha256_base64);
 
-my %config;
+#my %config;
 if (-e "db.conf"){
         #open the file and read into the config array
 }else{
@@ -26,7 +26,7 @@ sub new {
         return($self);
 
 }
-sub sendServerMessage {
+sub sendServerMessage{
 	my $string = @_;
 }
 sub getSessionId{
@@ -43,10 +43,10 @@ sub validateSessionId {
 	#get session info from database and validate if the session is still active.
 	my ($sessionID) = @_;
 }
-sub login {
+sub login{
 	my ($self, $user, $pass) = @_;
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
-	if ($response){
+	if ($response eq "some info here"){
                 $self->getSessionId($user, $pass);
 #		$self->logSuccessfulLogin($response{userid});
 		return "homePage";

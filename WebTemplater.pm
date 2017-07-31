@@ -23,7 +23,7 @@ sub new{
 sub start {
 	my ($self) = @_;
 	$self->headers();
-	print $GUI->startPage("Minecraft Server Admin");
+	$self->startPage();
 	$self->{output} .= $GUI->divStart("main");
 	$self->{output} .= $GUI->divStart("headbox");
         $self->{output} .= $GUI->divStart("header");
@@ -39,6 +39,11 @@ sub headers {
 	my ($self) = @_;
 	print $GUI->headers();
 }
+sub headersCookie{
+	my ($self, $cookie) = @_;
+	$GUI->headersCookie($cookie);
+}
+
 sub startPage{
 	my ($self) = @_;
 	$self->{output} .= $GUI->startPage("Minecraft Server Admin Page");
@@ -88,8 +93,7 @@ sub renderLoginErrorPage {
 }
 sub renderHomePage {
 	my ($self) = @_;
-        $self->headersCookie();
-        print $GUI->startPage("Minecraft Server Admin");
+        $self->startPage();
         $self->{output} .= $GUI->divStart("main");
         $self->{output} .= $GUI->divStart("headbox");
         $self->{output} .= $GUI->divStart("header");
