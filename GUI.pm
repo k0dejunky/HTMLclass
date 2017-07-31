@@ -86,7 +86,12 @@ sub clearPage {
 
 sub headers {
         my ($self) = @_;
-        return "Content-type: text/html\n";
+        return "Content-type: text/html\n\n";
+}
+sub headersCookie {
+	my ($self, $cookie) = @_;
+	print "Content-type: text/html\n";
+	print $cookie;
 }
 sub startPage {
         my ($self, $title) = @_;
@@ -123,7 +128,7 @@ sub span {
 	}
 	if ($size == 3){
 		my ($self, $class, $string) = @_;
-		return "<span class='$class'>$string</span>";
+		return "<span class='$class'>".$string."</span>";
 	}
 }
 

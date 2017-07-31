@@ -24,11 +24,12 @@ sub new {
 }
 
 sub setCookie {
-	my ($self, $mdl) = @_;
+	my ($self, $mdl, $username, $password) = @_;
 	my $secure = 1;
 	my $expire = gmtime(time()+1*24*3600) . " GMT"; #sets the epire time to expire in 1 hour
-	my $cookie = "MinecraftServerAdmin=1; path=/; expires=$expire; $secure"; # sets the cookie data
-	$self->{cookie} =  "Set-cookie: " . $cookie . "\n"; # sets the cookie
+	my $sessionID = $mdl->getSessionId($username, $password);
+	my $cookie = "MinecraftServerAdmin=$sessionID; path=/; expires=$expire; $secure"; # sets the cookie data
+	$self->{cookie} =  "Set-cookie: " . $cookie . "\n\n"; # sets the cookie
 	return $self->{cookie}; #returns the cookie to the viewer
 }
 
@@ -37,15 +38,15 @@ sub getCookie {
 	my @cookies = split(/\s*;\s*/, $ENV{'HTTP_COOKIE'});
 	foreach (@cookies){
 		my @tokens = split(/=/, $_);
-		return $tokens[1] if($tokens[0] == $cookiename);
+		return $tokens[1] if($tokens[0] eq $cookiename);
 	}
 	return '';
 }
 
 sub login {
-	my ($self, $user, $pass) = @_;
+	my ($self, $mdl, $user, $pass) = @_;
 	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce eq "LOGIN FAILED"){
+	if ($loginResponce eq "LOGIN_FAILED"){
 		return $loginResponce;
 	}else{
 		return $loginResponce;

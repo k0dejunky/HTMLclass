@@ -9,15 +9,14 @@ use warnings;
 use WebTemplater;
 use WebController;
 use HTTP::Request::Common qw(POST);
-my (@mtd, @uname, @pword);
-my @POST;
 my $tmpl = WebTemplater->new();
 my $ctrl = WebController->new();
 my $length = $ENV{CONTENT_LENGTH};
 my $input;
 my (@data,@username, @password, @method);
 if($ENV{REQUEST_METHOD} eq "POST"){
-	my ($buffer) = "";
+	print $tmpl->headers();
+#	print "\n";
 	for (<>){
 		$input .= $_;
 	}
@@ -29,14 +28,12 @@ if($ENV{REQUEST_METHOD} eq "POST"){
 		if($method[1] eq "login"){
 			my $response = $ctrl->login($username[1], $password[1]);
 			if($response eq "homePage"){
-				$tmpl->headers();
-				print "\n";
+				$tmpl->headersCookie($ctrl->setCookie);
 				$tmpl->renderHomePage();
 				$tmpl->displayPage();
-			}elsif($response eq "LOGIN FAILED"){
+			}elsif($response eq "LOGIN_FAILED"){
 				$tmpl->headers();
-				print "\n";
-				$tmpl->renderLoginErrorPage("error",$response);
+				$tmpl->renderLoginErrorPage("Login Failed Try Again");
 				$tmpl->displayPage();
 			}
 		}else{

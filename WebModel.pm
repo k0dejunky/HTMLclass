@@ -51,19 +51,18 @@ sub login {
 #		$self->logSuccessfulLogin($response{userid});
 		return "homePage";
 	}else{
-		$self->logFailedLogin();
-		return "LOGIN FAILED";
+	#	$self->logFailedLogin();
+		return "LOGIN_FAILED";
 	}
 }
 sub logFailedLogin {
-#	my ($self, $connection, %userData) = @_;
-#	if ($userData{failed} eq $self->{failLimit}){
-#		$self->blockIP($userData{IP});	
-#		return "BLOCKED";
-#	}else{
-#		return "TRY_AGAIN";
-#	}
-	
+	my ($self, $connection, %userData) = @_;
+	if ($userData{failed} eq $self->{failLimit}){
+		#$self->blockIP($userData{IP});	
+		return "BLOCKED";
+	}else{
+		return "TRY_AGAIN";
+	}
 }
 sub createSessionId {
 	#create the session id here if authenticated. Use the username sha256 key to generate session id

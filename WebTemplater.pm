@@ -23,7 +23,6 @@ sub new{
 sub start {
 	my ($self) = @_;
 	$self->headers();
-	print "Set-Cookie: name=theshityo; path=/cgi-bin/;\n\n";
 	print $GUI->startPage("Minecraft Server Admin");
 	$self->{output} .= $GUI->divStart("main");
 	$self->{output} .= $GUI->divStart("headbox");
@@ -62,7 +61,7 @@ sub renderLogin {
 }
 sub renderLoginErrorPage {
 	my ($self, $string) = @_;
-	if ($string eq "LOGIN FAILED"){
+	if ($string eq "LOGIN_FAILED"){
 		$self->startPage();
 	        $self->{output} .= $GUI->divStart("main");
         	$self->{output} .= $GUI->divStart("headbox");
@@ -70,7 +69,6 @@ sub renderLoginErrorPage {
       		$self->{output} .= $GUI->h1("center", "Minecraft Server Admin Page");
         	$self->{output} .= $GUI->divEnd();
 	        $self->{output} .= $GUI->br();
-
 		$self->{output} .= $GUI->divStart("logon", "center");
         	$self->{output} .= $GUI->divStart("logon1", "vertCenter");
 	        $self->{output} .= $GUI->h1("center", "Log in below");
@@ -90,8 +88,7 @@ sub renderLoginErrorPage {
 }
 sub renderHomePage {
 	my ($self) = @_;
-        $self->headers();
-        print "Set-Cookie: name=theshityo; path=/cgi-bin/;\n\n";
+        $self->headersCookie();
         print $GUI->startPage("Minecraft Server Admin");
         $self->{output} .= $GUI->divStart("main");
         $self->{output} .= $GUI->divStart("headbox");
