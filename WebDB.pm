@@ -49,4 +49,9 @@ sub new {
         bless($self, $class);
         return($self);
 }
+sub connect {
+	my ($self) = @_;
+	my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
+	return $DBH;
+}
 1;
