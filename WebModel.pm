@@ -43,8 +43,8 @@ sub login{
 	#print "<p>".$user." ".$pass."</p>";
 	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
 	if ($response eq ""){
-                $self->getSessionId($user, $pass);
-#		$self->logSuccessfulLogin($response{userid});
+               	$self->getSessionId($user, $pass);
+	#	$self->logSuccessfulLogin($response{userid});
 		return "homePage";
 	}else{
 	#	$self->logFailedLogin();
