@@ -21,25 +21,26 @@ my $password;
 if (-e $filename){
 	#open the file and read into the config array
 	open(my $FH, '<', $filename) or die "Could not open file: '$filename' $!";
-	my $row;
-	for(<$FH>){
-		$row = $_;
+	while(my $row = <$FH>){
 		chomp $row;
-		if(index($row, "database=")>0){
+		if(index($row, "database=")>=0){
 			@tmp = split(/=/,$row);
 			$database = $tmp[1];
-		}elsif(index($row, "password=")>0){
+			print $database;
+		}elsif(index($row, "password=")>=0){
 			@tmp = split(/=/, $row);
 			$password = $tmp[1];
-		}elsif(index($row, "username=")>0){
+			print $password;
+		}elsif(index($row, "username=")>=0){
 			@tmp = split(/=/,$row);
 			$user = $tmp[1];
+			print $user;
 		}
 	}
 }else{
 	die("error no db.conf file");
 }
-my $DBH = $DBI->connect("DBI:mysql:driver=$database:host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
+my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
 
 sub new {
         my $class = shift;
