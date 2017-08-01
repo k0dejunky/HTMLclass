@@ -1,6 +1,6 @@
 # WebMVC
 
-Perl MVC - This MVC is currently in development. It is in the very early stages and isn't ready for use. The files contained in the repository are:
+ WebMVC - This MVC is currently in development. It is in the very early stages and isn't ready for use. The files contained in the repository are:
 
 WebModel.pm - This holds the sites data and mode information. The module uses WebDB.pm to push and retrieve all data from the mysql database. 
 
