@@ -11,7 +11,7 @@ use warnings;
 use WebDB;
 use Digest::SHA qw(hmac_sha256_base64);
 
-#my $db = WebDB->new();
+my $db = WebDB->new();
 
 sub new {
         my $class = shift;
