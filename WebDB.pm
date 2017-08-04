@@ -54,11 +54,20 @@ sub connect {
 	my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
 	return $DBH;
 }
+sub select {
+	my ($self, $sql) = @_;
+	my $dbh = $self->connect();
+	my $sth = $dbh->prepare($sql) or die "execution failed: $dbh->errstr()";
+	$sth->execute();
+	my $return;
+	while (my $ref = $sth->getchrow_hashref()){
+		$return .= $ref;
+	}
+	$self->disconnect();
+	return $return;
+}
 sub insert {
 	my ($self, $sql) = @_;
-	$self->connect();
-	
-	$self->disconnect();
 }
 
 sub delete {
