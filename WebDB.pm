@@ -54,4 +54,22 @@ sub connect {
 	my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
 	return $DBH;
 }
+sub insert {
+	my ($self, $sql) = @_;
+	$self->connect();
+	
+	$self->disconnect();
+}
+
+sub delete {
+	my ($self, $sql) = @_;
+}
+
+sub update {
+	my ($self, $sql) = @_;
+
+}
+sub disconnect {
+	my ($self) = @_;
+}
 1;
