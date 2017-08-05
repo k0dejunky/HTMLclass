@@ -40,7 +40,7 @@ if (-e $filename){
 }else{
 	die("error no db.conf file");
 }
-my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
+#my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
 
 sub new {
         my $class = shift;
@@ -51,19 +51,21 @@ sub new {
 }
 sub connect {
 	my ($self) = @_;
-	my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
-	return $DBH;
+	#my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
+	#return $DBH;
+	return DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or return $DBI::errstr;
 }
 sub select {
 	my ($self, $sql) = @_;
 	my $dbh = $self->connect();
-	my $sth = $dbh->prepare($sql) or die "execution failed: $dbh->errstr()";
+	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
 	$sth->execute();
 	my $return;
 	while (my $ref = $sth->getchrow_hashref()){
-		$return .= $ref;
+	
 	}
-	$self->disconnect();
+	$sth->finish;
+	$dbh->disocnnect();
 	return $return;
 }
 sub insert {
@@ -77,8 +79,5 @@ sub delete {
 sub update {
 	my ($self, $sql) = @_;
 
-}
-sub disconnect {
-	my ($self) = @_;
 }
 1;
