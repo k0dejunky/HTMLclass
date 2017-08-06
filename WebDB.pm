@@ -59,10 +59,10 @@ sub select {
 	my ($self, $sql) = @_;
 	my $dbh = $self->connect();
 	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
-	$sth->execute();
-	my $return;
+	my $rez = $sth->execute() or return $DBI::errstr;
+	my @return;
 	while (my $ref = $sth->getchrow_hashref()){
-	
+		push @return $ref;
 	}
 	$sth->finish;
 	$dbh->disocnnect();
@@ -70,14 +70,28 @@ sub select {
 }
 sub insert {
 	my ($self, $sql) = @_;
+	my $dbh = $self->connect();
+	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
+	my $rez = $sth->execute() or return $DBI::errstr;
+	$sth->finish;
+	$dbh->disconnect();
+	return $return;
 }
 
 sub delete {
 	my ($self, $sql) = @_;
+	my $dbh = $self->connect();
+	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
+	my $rez = $sth->execute() or return $DBI::errstr;
+	$sth->finish;
+	$dbh->disconnect();
 }
 
 sub update {
 	my ($self, $sql) = @_;
-
+	my $dbh = $self->connect();
+	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
+	my $rez = $sth->execute() or return $DBI::errstr;
+	
 }
 1;
