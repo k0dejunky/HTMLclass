@@ -192,4 +192,8 @@ sub centerEnd {
         my ($self) = @_;
 	return "</center> ";
 }
+sub button {
+	my ($self) = @_;
+}
+
 1;
