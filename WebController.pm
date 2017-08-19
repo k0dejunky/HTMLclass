@@ -28,13 +28,13 @@ sub setCookie {
 	my $secure = 1;
 	my $expire = gmtime(time()+1*24*3600) . " GMT"; #sets the epire time to expire in 1 hour
 	my $sessionID = $mdl->getSessionId($username, $password);
-	my $cookie = "MinecraftServerAdmin=$sessionID; path=/; expires=$expire; $secure"; # sets the cookie data
+	my $cookie = "WebMVCServerAdmin=$sessionID; path=/; expires=$expire"; # sets the cookie data
 	$self->{cookie} =  "Set-cookie: " . $cookie . "\n\n"; # sets the cookie
 	return $self->{cookie}; #returns the cookie to the viewer
 }
 
 sub getCookie {
-	my ($cookiename) = @_;
+	my ($self, $cookiename) = @_;
 	my @cookies = split(/\s*;\s*/, $ENV{'HTTP_COOKIE'});
 	foreach (@cookies){
 		my @tokens = split(/=/, $_);
