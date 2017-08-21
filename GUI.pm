@@ -15,8 +15,17 @@ sub new {
 	my $self = {%options};
         bless($self, $class);
         return($self);
-
 }
+sub button {
+	my $size = scalar @_;
+	if ($size == 3){
+		my ($self, $name, $type, $formmethod, $value, $text) = @_;
+		return "<button type=$type>$text</button>";
+	}elsif($size = 4){
+		my ($self, $class, $type, $text)
+	}
+}
+
 sub a {
 	my $size = scalar @_;
 	if ($size == 3){

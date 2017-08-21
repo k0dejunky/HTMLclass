@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!usr/bin/perl
 
 #Author: Kodejunky
 #Date: July 12, 2017
@@ -24,7 +24,7 @@ sub new {
 }
 
 sub setCookie {
-	my ($self, $mdl, $username, $password) = @_;
+	my ($self, $username, $password, $type) = @_;
 	my $secure = 1;
 	my $expire = gmtime(time()+1*24*3600) . " GMT"; #sets the epire time to expire in 1 hour
 	my $sessionID = $mdl->getSessionId($username, $password);
