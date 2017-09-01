@@ -36,16 +36,23 @@ sub setCookie{
 }
 sub validateSessionId {
 	#get session info from database and validate if the session is still active.
-	my ($sessionID) = @_;
+	my ($self, $sessionID) = @_;
+	my $response = $db->select("select * from SESSIONS where sessionID = '$sessionID';'");
+	if($response eq "$response->{sessionID}"){
+		##### blah you knoe
+	}
 }
 sub login{
 	my ($self, $user, $pass) = @_;
-	#print "<p>".$user." ".$pass."</p>";
-	my $response = ""; # the response will be the sql return from DBI for the authentication of user login.
-	if ($response eq ""){
-               	$self->getSessionId($user, $pass);
-	#	$self->logSuccessfulLogin($response{userid});
-		return "homePage";
+	my @response = $db->select("Select * from users where username = '".$user."' and password = '".$pass."';");
+	if (($response[1] eq $user)&&($response[2] eq $pass)){
+		if($response[3] == 1){
+			return "adminAccount";
+		}else{
+	               	$self->getSessionId($user, $pass);
+			#$self->logSuccessfulLogin($response->{id});
+			return "homePage";
+		}
 	}else{
 	#	$self->logFailedLogin();
 		return "LOGIN_FAILED";

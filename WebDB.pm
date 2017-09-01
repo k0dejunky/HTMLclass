@@ -11,7 +11,7 @@ use warnings;
 
 use DBI;
 
-my $filename = "db.conf";
+my $filename = "minecraftServer.conf";
 my $noDB = 0;
 my @tmp;
 my $database;
@@ -26,21 +26,23 @@ if (-e $filename){
 		if(index($row, "database=")>=0){
 			@tmp = split(/=/,$row);
 			$database = $tmp[1];
-			print $database;
+			#print "Content-type: text/html\n\n";
+			#print "Database: $database\n";
 		}elsif(index($row, "password=")>=0){
 			@tmp = split(/=/, $row);
 			$password = $tmp[1];
-			print $password;
+			#print "Content-type: text/html\n\n";
+			#print "Password: $password\n";
 		}elsif(index($row, "username=")>=0){
 			@tmp = split(/=/,$row);
 			$user = $tmp[1];
-			print $user;
+			#print "Content-type: text/html\n\n";
+			#print "Username: $user\n";
 		}
 	}
 }else{
 	die("error no db.conf file");
 }
-#my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
 
 sub new {
         my $class = shift;
@@ -51,9 +53,8 @@ sub new {
 }
 sub connect {
 	my ($self) = @_;
-	#my $DBH = DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
-	#return $DBH;
-	return DBI->connect("DBI:mysql:driver=$database;host=localhost",$user,$password) or return $DBI::errstr;
+	my $DBH = DBI->connect("DBI:mysql:database=$database;host=localhost",$user,$password) or die "could not connect to the database: $DBI::errstr";
+	return $DBH;
 }
 sub select {
 	my ($self, $sql) = @_;
@@ -61,12 +62,16 @@ sub select {
 	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
 	my $rez = $sth->execute() or return $DBI::errstr;
 	my @return;
-	while (my $ref = $sth->getchrow_hashref()){
-		push @return $ref;
+	while (my $ref = $sth->fetchrow_hashref()){
+		push @return, $ref->{id};
+		push @return, $ref->{username};
+		push @return, $ref->{password};
+		push @return, $ref->{isAdmin};
+		push @return, $ref->{loggedIN};
 	}
 	$sth->finish;
-	$dbh->disocnnect();
-	return $return;
+	$dbh->disconnect();
+	return @return;
 }
 sub insert {
 	my ($self, $sql) = @_;
@@ -75,7 +80,7 @@ sub insert {
 	my $rez = $sth->execute() or return $DBI::errstr;
 	$sth->finish;
 	$dbh->disconnect();
-	return $return;
+	return "COMPLETE";
 }
 
 sub delete {

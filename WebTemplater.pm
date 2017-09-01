@@ -22,8 +22,10 @@ sub new{
 
 sub start {
 	my ($self) = @_;
-	$self->headers();
-	$self->startPage();
+	#$self->headers();
+	$self->{output} = $GUI->headers();
+	#$self->startPage();
+	$self->{output} .= $GUI->startPage("minecraft Server Admin Page");
 	$self->{output} .= $GUI->divStart("main");
 	$self->{output} .= $GUI->divStart("headbox");
         $self->{output} .= $GUI->divStart("header");
@@ -35,19 +37,11 @@ sub start {
         $self->{output} .= $GUI->divEnd();
 	$self->displayPage();
 }
-sub headers {
-	my ($self) = @_;
-	print $GUI->headers();
-}
 sub headersCookie{
 	my ($self, $cookie) = @_;
 	$GUI->headersCookie($cookie);
 }
 
-sub startPage{
-	my ($self) = @_;
-	$self->{output} .= $GUI->startPage("Minecraft Server Admin Page");
-}
 sub renderLogin {
 	my ($self) = @_;
 	$self->{output} .= $GUI->divStart("logon", "center");
@@ -67,8 +61,8 @@ sub renderLogin {
 sub renderLoginErrorPage {
 	my ($self, $string) = @_;
 	if ($string eq "LOGIN_FAILED"){
-		$self->headers();
-		$self->startPage();
+		$self->{output} = $GUI->headers();
+		$self->{output} .= $GUI->startPage("Minecraft Server Admin Page");
 	        $self->{output} .= $GUI->divStart("main");
         	$self->{output} .= $GUI->divStart("headbox");
 	        $self->{output} .= $GUI->divStart("header");
@@ -95,8 +89,8 @@ sub renderLoginErrorPage {
 }
 sub renderHomePage {
 	my ($self) = @_;
-	$self->headers();
-        $self->startPage();
+	$self->{output} = $GUI->headers();
+        $self->{output} .= $GUI->startPage("Minecraft Server Admin Page");
         $self->{output} .= $GUI->divStart("main");
         $self->{output} .= $GUI->divStart("headbox");
         $self->{output} .= $GUI->divStart("header");
@@ -130,6 +124,5 @@ sub renderProfile {
 sub displayPage{
 	my ($self) = @_;
 	print $self->{output};
-	$self->{output} = "";
 }
 1;

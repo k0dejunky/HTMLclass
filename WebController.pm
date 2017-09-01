@@ -11,9 +11,10 @@ use strict;
 use warnings;
 
 use WebModel;
+use WebTemplater;
 
 my $mdl = WebModel->new();
-
+my $tmpl = new WebTemplater;
 sub new {
         my $class = shift;
         my %options = @_;
@@ -45,10 +46,10 @@ sub getCookie {
 
 sub login {
 	my ($self, $user, $pass) = @_;
-	#print "<p> user: ".$user."</p>";
-	#print "<p> pass: ".$pass."</p>";
 	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce){
+	if ($loginResponce eq 'LOGIN_FAILED'){
+		return "LOGIN_FAILED";
+	}elsif($loginResponce eq "homePage"){
 		return $loginResponce;
 	}else{
 		return "NO_RESPONSE_TRY_AGAIN";
@@ -59,13 +60,12 @@ sub processRequest{
 }
 
 sub parcePost {
-	my ($self, $mdl, $INPUT) = @_;
+	my ($self, $INPUT) = @_;
 	my (@uname, @pword, @mtd);
 	if ((index($INPUT, "username")>0)&&(index($INPUT, "password")>0)&&(index($INPUT, "submit")>0)){
 		my  ($username, $password, $method)= $self->parceInput($INPUT);
 		if (index($username, "username=")>0){
 			@uname = $self->parceInput($username);
-			print $uname[0]." ".$uname[1];
 		}
 		if (index($password, "pword=")>0){
 			@pword = $self->parceInput($password);
@@ -77,8 +77,7 @@ sub parcePost {
 	return (\@uname,\@pword,\@mtd);
 }
 sub parceInput {
-	my $string = shift;
-	print $string;
+	my ($self,$string) = @_;
 	if ((index($string, "&")>0)&&(index($string, "=")>0)){
 		return split(/&/,$string);
 	}elsif (index($string, "=")>0&&(index($string, "&")==-1)){

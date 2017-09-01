@@ -41,11 +41,11 @@ sub formStart {
 	my $size = scalar @_;
 	if ($size == 4){
 		my ($self, $action, $method, $name) = @_;
-		return "<form action='$action' method='$method' name='$name'> ";
+		return "<form action='$action' method='$method' name='$name'>\n ";
 	}
 	if ($size == 5){
                 my ($self,$class, $action, $method, $name) = @_;
-		return "<form class='$class' action='$action' method='$method' name='$name'> ";
+		return "<form class='$class' action='$action' method='$method' name='$name'>\n ";
 	}
 }
 sub formEnd {
@@ -104,7 +104,8 @@ sub headersCookie {
 }
 sub startPage {
         my ($self, $title) = @_;
-	return "<head> <title>$title</title> <meta http-equiv='content-type' content='text/html; charset=iso-8859-1' /> <meta name='description' content='Minecraft Server Admin Page' /> <meta name='keywords' content='minecraft,server,admin,mods,ops,op,mod,servers,admins,users,admin portal, minecraft server' /> <meta name='verify-v1' content='JXc3KveeHbrgl57Ihf6Vws5PdCi0JxDllmO4Z476c0Y=' /> <link rel='stylesheet' type='text/css' href='../style/MinecraftServerAdmin.css' /> <link rel='icon' type='image/png' href='../images/favicon.png' /> </head> ";
+	my $docroot = $ENV{DOCUMENT_ROOT};
+	return "<head> <title>$title</title> <meta http-equiv='content-type' content='text/html; charset=iso-8859-1' /> <meta name='description' content='Minecraft Server Admin Page' /> <meta name='keywords' content='minecraft,server,admin,mods,ops,op,mod,servers,admins,users,admin portal, minecraft server' /> <meta name='verify-v1' content='JXc3KveeHbrgl57Ihf6Vws5PdCi0JxDllmO4Z476c0Y=' /> <link rel='stylesheet' type='text/css' href='../style/minecraftServerAdmin.css' /> <link rel='icon' type='image/png' href='../images/favicon.png' /> </head> ";
 }
 
 sub p {
@@ -201,8 +202,4 @@ sub centerEnd {
         my ($self) = @_;
 	return "</center> ";
 }
-sub button {
-	my ($self) = @_;
-}
-
 1;
