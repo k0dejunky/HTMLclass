@@ -138,6 +138,33 @@ sub span {
 	}
 	if ($size == 3){
 		my ($self, $class, $string) = @_;
+	        my ($self, $string) = @_;
+		return "<p>".$string."</p> ";
+	}
+	if ($size == 3){
+		my ($self, $class, $string) = @_;
+		return "<p class='$class'>".$string."</p> ";
+	}
+}
+
+sub br {
+        my ($self) = @_;
+	return "<br/> ";
+}
+
+sub displayPage {
+        my ($self) = @_;
+        return $self->{output};
+}
+
+sub span {
+	my $size = scalar @_;
+	if ($size == 2){
+		my ($self, $string) = @_;
+		return "<span>".$string."</span> ";
+	}
+	if ($size == 3){
+		my ($self, $class, $string) = @_;
 		return "<span class='$class'>".$string."</span>";
 	}
 }

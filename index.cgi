@@ -41,9 +41,8 @@ if($ENV{REQUEST_METHOD} eq "POST"){
         	                        $tmpl->renderLoginErrorPage($response);
                 	        }elsif($response eq "NO_RESPONSE_TRY_AGAIN"){
 					$tmpl->renderLoginErrorPage($response);
-	                        }elsif($response eq "adminAccount"){
-					print "Content-type: text/html\n\n";
-					print "<p>this is the admin page</p>\n";
+				}elsif($response eq "adminAccount"){
+					$tmpl->renderAdminPage();
 				}else{
 					print "Content-type: text/html\n\n";
 					print "<h1> Something went wrong!!!</h1>\n";

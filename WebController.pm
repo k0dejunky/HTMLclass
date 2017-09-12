@@ -51,6 +51,8 @@ sub login {
 		return "LOGIN_FAILED";
 	}elsif($loginResponce eq "homePage"){
 		return $loginResponce;
+	}elsif($loginResponce eq "adminAccount"){
+		return $loginResponce;
 	}else{
 		return "NO_RESPONSE_TRY_AGAIN";
 	}
