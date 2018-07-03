@@ -1,4 +1,4 @@
-#!usr/bin/perl
+#!usr/bin/perl -WT
 
 #Author: Kodejunky
 #Date: July 12, 2017
@@ -7,55 +7,120 @@
 
 package WebController;
 
+BEGIN { use lib "/usr/lib/cgi-bin"; }
 use strict;
 use warnings;
 
+use Data::Dumper;
+
 use WebModel;
 use WebTemplater;
-
 my $mdl = WebModel->new();
-my $tmpl = new WebTemplater;
+my $tmpl = WebTemplater->new();
+
 sub new {
         my $class = shift;
         my %options = @_;
         my $self = {send => "",receive => "",cookie => "",  %options};
+	my $hdr = {hdr => "", cookiehdr => "", csshdr => "", endhdr => "\n"};
+	my $pg = 
         bless($self, $class);
         return($self);
 
 }
 
 sub setCookie {
-	my ($self, $username, $password, $type) = @_;
-	my $secure = 1;
-	my $expire = gmtime(time()+1*24*3600) . " GMT"; #sets the epire time to expire in 1 hour
-	my $sessionID = $mdl->getSessionId($username, $password);
-	my $cookie = "WebMVCServerAdmin=$sessionID; path=/; expires=$expire"; # sets the cookie data
-	$self->{cookie} =  "Set-cookie: " . $cookie . "\n\n"; # sets the cookie
-	return $self->{cookie}; #returns the cookie to the viewer
+	my ($self, $cookie) = @_;
+	return $mdl->setCookie($cookie);
 }
 
 sub getCookie {
 	my ($self, $cookiename) = @_;
-	my @cookies = split(/\s*;\s*/, $ENV{'HTTP_COOKIE'});
-	foreach (@cookies){
-		my @tokens = split(/=/, $_);
-		return $tokens[1] if($tokens[0] eq $cookiename);
+	if($ENV{HTTP_COOKIE}){
+		my @cookies = split(/&/, $ENV{HTTP_COOKIE});
+		foreach (@cookies){
+			my @tokens = split(/=/, $_);
+			return $tokens[1] if($tokens[0] eq $cookiename);
+		}
+	}elsif($ENV{QUERY_STRING}){
+		my @cookies = split(/&/, $ENV{QUERY_STRING});
+		foreach (@cookies){
+			my @tokens = split(/=/, $_);
+			return $tokens[1] if($tokens[0] =~ /$cookiename/);
+		}
 	}
-#	return '';
 }
 
 sub login {
 	my ($self, $user, $pass) = @_;
-	my $loginResponce = $mdl->login($user, $pass);
-	if ($loginResponce eq 'LOGIN_FAILED'){
-		return "LOGIN_FAILED";
-	}elsif($loginResponce eq "homePage"){
-		return $loginResponce;
-	}elsif($loginResponce eq "adminAccount"){
-		return $loginResponce;
+	my $loginResponce = ($mdl->login($user, $pass));
+	my @returnVals;
+	if ($loginResponce->{error}){
+		if($loginResponce->{error} =~ /U_OR_P_NE/){
+			return {error => $tmpl->renderLoginErrorPage('Username or password Not Entered')};
+		}elsif($loginResponce->{error} =~ /U_OR_P_NF/){
+			return {error => $tmpl->renderLoginErrorPage('Username or Password Not Found')};
+		}else{
+			return {error => $tmpl->renderLoginErrorPage($loginResponce->{error})};
+		}
+	}elsif($loginResponce->{username} =~ /$user/ && $loginResponce->{password} =~/$pass/){
+		if($loginResponce->{isAdmin} == 0){
+			return {cookie => $mdl->createSessionId($user, $pass), info => $loginResponce};
+                }else{
+			return {cookie => $mdl->createSessionId($user, $pass), info => $loginResponce};
+ 		}	
 	}else{
-		return "NO_RESPONSE_TRY_AGAIN";
+		return {error => "WHAT_THE_FUCK"};
 	}
+}
+sub login2 {
+#        my ($self, $user, $pass) = @_;
+#        my @loginResponce = ($mdl->login($user, $pass));
+#        print "Content-type: text/html\n\n";
+#        print Dumper $loginResponce;
+#        #sleep(15);
+#	exit();
+#        my @returnVals;
+#                #print "Content-type: text/html\n\n";
+#                #print Dumper @loginResponce;
+#                #print $loginResponce[0];
+#                #print "login2: " . $loginResponce[1];
+#                #exit();
+#        if($loginResponce[0] && $loginResponce[1#]){
+#                if($loginResponce->{isAdmin} == 0){
+#                        #return @loginResponce;
+#                        #push @returnVals, $loginResponce[0];
+#                        #push @returnVals, $tmpl->renderHomePage($loginResponce[1]);
+#                        #return @returnVals;
+#                        my $cookie = $mdl->createSessionId($user, $pass);
+#                        push @returnVals, $cookie;
+#                        push @returnVals, $tmpl->renderHomePage($loginResponce);
+#                        return @returnVals;
+#                }elsif($loginResponce[1] =~ /adminAccount/){
+#                        #return @loginResponce;
+#                        my $cookie = $mdl->createSessionId($loginResponce->{username}, $loginResponce->{password});
+#                        push @returnVals, $cookie;
+#                        push @returnVals, $tmpl->renderAdminAccount($loginResponce[1]);
+#                        return @returnVals;
+#
+#                }
+#        }elsif($loginResponce[0]){
+#                #print "Content-type: text/html\n\n";
+#                #print Dumper @loginResponce;
+#                #print $loginResponce[0];
+#                #print "login2: " . $loginResponce[1];
+#                #exit();
+#                if($loginResponce->{error} =~ /U_OR_P_NE/){
+#                        return $tmpl->renderLoginErrorPage("Username or password Not Entered");
+#                }elsif($loginResponce->{error} =~ /U_OR_P_NF/){
+#                        return $tmpl->renderLoginErrorPage("Username or Password Not Found");
+#                }else{
+#                        return $tmpl->renderLoginErrorPage($loginResponce[0]);
+#                }
+#        }else{
+#                #return $loginResponce[1];
+#                return "WHAT_THE_FUCK";
+#        }
 }
 sub processRequest{
 	
@@ -76,7 +141,11 @@ sub parcePost {
 			@mtd = $self->parceInput($method);
 		}
 	}
-	return (\@uname,\@pword,\@mtd);
+	my @retvals;
+	push @retvals, @uname;
+	push @retvals, @pword;
+	push @retvals, @mtd;
+	return @retvals;
 }
 sub parceInput {
 	my ($self,$string) = @_;
@@ -101,4 +170,30 @@ sub stopServer {
 sub getMods {
 
 }
+sub validateCookie {
+	my ($self, $sessionID) = @_;
+	return $mdl->validateSessionId($sessionID);
+}
+sub renderHomePage {
+	my ($self, $data) = @_;
+	$tmpl->renderHomePage($data);
+}
+sub start {
+	my ($self) = @_;
+	return $tmpl->start();
+}
+sub url_decode {
+	my ($self, $text) = @_;
+	$text =~ tr/ /+/;
+	$text =~ s/%([a-f0-9][a-f0-9])/chr( hex( $1 ))/egi;
+	return $text;
+}
+sub url_encode {
+	my ($self, $text) = @_;
+	#$text =~ s/([^a-z0-9_.!~*'\(\)-])/sprintf *%%%02X*, ord($1)/egi;
+	$text =~ tr/ /+/;
+	return $text;
+}
+
+
 1;
