@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -WT
 #Author: Kodejunky
 #Date: July 12, 2017
 #File: WebPageModel.pm
@@ -24,39 +24,72 @@ sub new {
 sub sendServerMessage{
 	my $string = @_;
 }
-sub getSessionId{
+sub createCSRFToken {
+	# stuff here
+}
+sub createSessionId{
 	my ($self, $string, $key) = @_;
-	my $mac = hmac_sha256_base64($string, $key);
-	$self->{SESSIONID} = $mac;
+	my $secureString = $string . time();
+	my $mac = hmac_sha256_base64($secureString, $key);
+	$mac  =~ s/[^a-zA-Z0-9,]//g;
+	my $expire = (time() + (12*60*60));
+#	my $CSRF = $self->createCSRFToken();
+	my $cookie = "Cookie: MinecraftServerBlog=$mac\n"; # sets the cookie data
+	my $setCookie = $self->setCookie($mac, $string, $expire);
+	if($setCookie =~ /SET/){
+		return $cookie;
+	}else{
+		return $setCookie;
+	}
 }
 sub setCookie{
 	#input the database values into the sessions table
-	my ($sessionId, $expire, $path) = @_;
+	my ($self, $session, $user, $expired) = @_;
 	#database input here;
+	#print "Content-type: text/html\n\n";
+	#print "sess: " . $session . " Username: " . $user . " Expire: " . $expired;
+	my $insert = $db->insert("insert into SESSIONS (sessionID, username, expire) values ('$session', '$user', $expired)");
+	if($insert =~/COMPLETE/){
+		return "SET";
+	}else{
+		return $insert;
+	}
 }
 sub validateSessionId {
 	#get session info from database and validate if the session is still active.
 	my ($self, $sessionID) = @_;
 	my $response = $db->select("select * from SESSIONS where sessionID = '$sessionID';'");
-	if($response eq "$response->{sessionID}"){
+	if($sessionID eq "$response->{sessionID}"){
 		##### blah you knoe
+		if($response->{expire} > time()){
+			return $response;
+		}else{
+			return 0;
+		}
+	}else{
+		return 0;
 	}
 }
 sub login{
-	my ($self, $user, $pass) = @_;
-	my @response = $db->select("Select * from users where username = '".$user."' and password = '".$pass."';");
-	if (($response[1] eq $user)&&($response[2] eq $pass)){
-		if($response[3] == 1){
-			return "adminAccount";
+#	my $ARGS = scalar @_;
+#	if($ARGS == 3){
+		my ($self, $user, $pass) = @_;
+		if($user && $pass){
+			my $response = $db->select("Select * from users where username = '".$user."' and password = '".$pass."';");
+			if($response){
+				if (($response->{username} =~ /$user/)&&($response->{password} =~ /$pass/)){
+					return $response;	
+				}else{
+					return {error => "LOGIN_FAILED"};
+					
+				}
+			}else{
+				return {error => "U_OR_P_NF"};
+			}
 		}else{
-	               	$self->getSessionId($user, $pass);
-			#$self->logSuccessfulLogin($response->{id});
-			return "homePage";
+			return {error => "U_OR_P_NE"};
 		}
-	}else{
-	#	$self->logFailedLogin();
-		return "LOGIN_FAILED";
-	}
+#	}
 }
 sub logFailedLogin {
 	my ($self, $connection, %userData) = @_;
@@ -66,9 +99,6 @@ sub logFailedLogin {
 	}else{
 		return "TRY_AGAIN";
 	}
-}
-sub createSessionId {
-	#create the session id here if authenticated. Use the username sha256 key to generate session id
 }
 sub restartServer {
 
