@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -WT
 
 #Author: Kodejunky
 #Date: July 12, 2017
@@ -62,16 +62,16 @@ sub select {
 	my $sth = $dbh->prepare($sql) or return $DBI::errstr;
 	my $rez = $sth->execute() or return $DBI::errstr;
 	my @return;
-	while (my $ref = $sth->fetchrow_hashref()){
-		push @return, $ref->{id};
-		push @return, $ref->{username};
-		push @return, $ref->{password};
-		push @return, $ref->{isAdmin};
-		push @return, $ref->{loggedIN};
-	}
+	my $ref = $sth->fetchrow_hashref();#{
+	#	push @return, $ref->{id};
+	#	push @return, $ref->{username};
+	#	push @return, $ref->{password};
+	#	push @return, $ref->{isAdmin};
+	#	push @return, $ref->{loggedIN};
+	#}
 	$sth->finish;
 	$dbh->disconnect();
-	return @return;
+	return $ref;
 }
 sub insert {
 	my ($self, $sql) = @_;
