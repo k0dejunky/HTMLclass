@@ -12,6 +12,11 @@ index.cgi - This is the view. It uses WebTemplater.pm to choose what is to be di
 
 WebTemplater.pm - This module uses GUI.pm to generate the requested page.
 
-GUI.pm - This module simply returns an HTML string depending on the input and function used. The function naming convention used directly matches the HTML tag name. Ex: html tag h1 would be function call $GUI->h1(optional_class_name, text).
+GUI.pm - This module simply returns an HTML string depending on the input and function used. The function naming convention used directly matches the HTML tag name. Ex: html tag h1 would be function call.
+{code}
+$GUI->h1(class=>"class name", text=>"text");
+{code}
+
+The function is overloaded so it can take anything from 1 required input (which is the text) to any number of inputs that the element can receive. To better understand the accepted inputs review the HTML5 documentation to see what each element accepts keeping in mind that the text displayed by the element is REQUIRED.
 
 
