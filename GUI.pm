@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -T
 
 #Author K0dejunky
 #Date July 7, 2017
@@ -17,12 +17,16 @@ sub new {
         return($self);
 }
 sub button {
-	my $size = scalar @_;
-	if ($size == 3){
-		my ($self, $name, $type, $formmethod, $value, $text) = @_;
-		return "<button type=$type>$text</button>";
-	}elsif($size = 4){
-		my ($self, $class, $type, $text)
+#	my $size = scalar @_;
+#	if ($size == 3){
+#		my ($self, $name, $type, $formmethod, $value, $text) = @_#;
+#		return "<button type=$type>$text</button>";
+#	}elsif($size = 4){
+#		my ($self, $class, $type, $text)
+#	}
+my ($self, $data) = @_;
+	if($data->{name} && $data->{class} && $data->{type} && $data->{value} && $data->{formaction} && $data->{formid} && $data->{formmethod}){
+		return "<button name='$data->{name}' class=$data->{class} type='$data->{type}' formaction='$data->{formaction}' formid='$data->{formid}'>$data->{value}</button>";
 	}
 }
 
@@ -40,12 +44,12 @@ sub a {
 sub formStart {
 	my $size = scalar @_;
 	if ($size == 4){
-		my ($self, $action, $method, $name) = @_;
-		return "<form action='$action' method='$method' name='$name'>\n ";
+		my ($self, $id, $action, $method, $name) = @_;
+		return "<form id='$id' action='$action' method='$method' name='$name' accept-charset=utf-8>\n ";
 	}
 	if ($size == 5){
-                my ($self,$class, $action, $method, $name) = @_;
-		return "<form class='$class' action='$action' method='$method' name='$name'>\n ";
+                my ($self,$id, $class, $action, $method, $name) = @_;
+		return "<form id='$id' class='$class' action='$action' method='$method' name='$name' accept-charset=utf-8>\n ";
 	}
 }
 sub formEnd {
@@ -53,23 +57,21 @@ sub formEnd {
 	return "</form> ";
 }
 sub input {
-        my $size = scalar @_;
-        if ($size == 4){
-	        my ($self, $name, $type,$value) = @_;
-		return "<input name='$name' type='$type' value='$value'/> ";
-        }
-	if ($size == 5){
-                my ($self, $name, $class, $type, $value) = @_;
-		return "<input name='$name' class='$class' type='$type' value='$value' /> ";
+	my ($self, $data, $attributes) = @_;
+	if($attributes->{accept}){
+		
 	}
-	if ($size == 6){
-	        my ($self, $name, $type, $value, $size, $max) = @_;
-		return "<input name='$name' type='$type' value='$value' size='$size' maxlength='$max'/> ";
+	if($data->{name} && $data->{class} && $data->{type} && $data->{size} && $data->{maxLength} && $data->{placeholder}){
+		return "<input name='$data->{name}' class='$data->{class}' type='$data->{type}' size='$data->{size}' maxlength='$data->{maxLength}' placeholder='$data->{placeholder}'>";
+	}elsif($data->{name} && $data->{type} && $data->{size} && $data->{maxLength}){
+		return "<input name='$data->{name}' type='$data->{type}' size='$data->{size}' maxlength='$data->{maxLength}'/> ";
+	}elsif($data->{name} && $data->{class} && $data->{type}){
+                return "<input name='$data->{name}' class='$data->{class} type='$data->{type}'/>";
+        }elsif($data->{name} && $data->{type} && $data->{value}){
+		return "<input name='$data->{name}' type='$data->{type}' value='$data->{value}'/>";
+	}elsif($data->{name} && $data->{type}){
+                  return "<input name='$data->{name}' type='$data->{type}'/>";
         }
-	if($size == 7){
-		my ($self, $name, $class, $type, $value, $size, $max) = @_;
-		return "<input name='$name' class='$class' type='$type' value='$value' size='$size' maxlength='$max'/> ";
-	}
 }
 sub divStart {
 	my $size = scalar @_;
@@ -103,9 +105,8 @@ sub headersCookie {
 	print $cookie;
 }
 sub startPage {
-        my ($self, $title) = @_;
-	my $docroot = $ENV{DOCUMENT_ROOT};
-	return "<head> <title>$title</title> <meta http-equiv='content-type' content='text/html; charset=iso-8859-1' /> <meta name='description' content='Minecraft Server Admin Page' /> <meta name='keywords' content='minecraft,server,admin,mods,ops,op,mod,servers,admins,users,admin portal, minecraft server' /> <meta name='verify-v1' content='JXc3KveeHbrgl57Ihf6Vws5PdCi0JxDllmO4Z476c0Y=' /> <link rel='stylesheet' type='text/css' href='../style/minecraftServerAdmin.css' /> <link rel='icon' type='image/png' href='../images/favicon.png' /> </head> ";
+        my ($self, $data) = @_;
+	return "<head> <title>$data->{title}</title> <meta http-equiv='content-type' content='text/html; charset=iso-8859-1' /> <meta name='description' content='Minecraft Server Admin Page' /> <meta name='keywords' content='minecraft,server,admin,mods,ops,op,mod,servers,admins,users,admin portal, minecraft server' /> <link rel='stylesheet' type='text/css' href='../style/minecraftServerAdmin.css' /></head><html><body> ";
 }
 
 sub p {
@@ -137,48 +138,19 @@ sub span {
 		return "<span>".$string."</span> ";
 	}
 	if ($size == 3){
-		my ($self, $class, $string) = @_;
-	        my ($self, $string) = @_;
-		return "<p>".$string."</p> ";
-	}
-	if ($size == 3){
-		my ($self, $class, $string) = @_;
-		return "<p class='$class'>".$string."</p> ";
+		my ($self, $string, $style) = @_;
+		return "<span style='".$style."'>".$string."</span>";
 	}
 }
-
-sub br {
-        my ($self) = @_;
-	return "<br/> ";
-}
-
-sub displayPage {
-        my ($self) = @_;
-        return $self->{output};
-}
-
-sub span {
-	my $size = scalar @_;
-	if ($size == 2){
-		my ($self, $string) = @_;
-		return "<span>".$string."</span> ";
-	}
-	if ($size == 3){
-		my ($self, $class, $string) = @_;
-		return "<span class='$class'>".$string."</span>";
-	}
-}
-
 
 sub h1 {
-        my $size = scalar @_;
-        if ($size == 2){
-                my ($self, $string) = @_;
-		return "<h1>".$string."</h1> ";
+        my ($self, $data) = @_;
+        if ($data->{class} && $data->{string}){
+                return "<h1 class='$data->{class}'>".$data->{string}."</h1> ";
         }
-        if ($size == 3){
-                my ($self, $class, $string) =@_;
-		return "<h1 class='$class'>".$string."</h1> ";
+        if ($data->{string}){
+                my ($self, $string) = @_;
+		return "<h1>".$data->{string}."</h1> ";
         }
 }
 
@@ -218,15 +190,5 @@ sub h4 {
                 return "<h4 class='$class'>".$string."</h4> ";
 	}
         
-}
-
-sub center {
-        my ($self) = @_;
-	return "<center> ";
-}
-
-sub centerEnd {
-        my ($self) = @_;
-	return "</center> ";
 }
 1;
