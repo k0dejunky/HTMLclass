@@ -8,4 +8,9 @@ $tmpl = new template();
 echo $tmpl->element("div", ["id"=>"login", "name"=>"myLogin", "class"=>"center"]);
 echo $tmpl->endElement("div");
 
-The element function is capable of building any HTML element with the supplied options. 
+if you are using an element that doesn't have any attributes use the following syntax:
+
+ex:
+echo $tmpl->("br", NULL);
+
+The element function is capable of building any HTML element with the supplied options or NULL. 
